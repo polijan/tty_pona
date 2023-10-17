@@ -1,0 +1,11 @@
+#!/bin/sh
+##############################################
+# tty_pona - using sitelen pona in terminals #
+# see: https://github.com/polijan/tty_pona   #
+##############################################
+
+# Usage: fc-list-pona [fc-list-args]...
+# wrapper around fc-list(1) that displays only sitelen pona UCSUR fonts
+# (requires `fc-list` from fontconfig)
+
+fc-list "$@" ':charset=F1900'

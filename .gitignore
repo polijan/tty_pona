@@ -1,0 +1,15 @@
+##############################################
+# tty_pona - using sitelen pona in terminals #
+# see: https://github.com/polijan/tty_pona   #
+##############################################
+
+# files to ignore
+bin/width
+lib/tty_pona.so
+
+# ignore editor stuff
+*.swp
+*~
+
+# put temporary stuff here
+tmp/

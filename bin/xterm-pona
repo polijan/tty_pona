@@ -1,0 +1,62 @@
+#!/bin/sh
+##############################################
+# tty_pona - using sitelen pona in terminals #
+# see: https://github.com/polijan/tty_pona   #
+##############################################
+
+# Usage: xterm-pona [xterm_args]...
+# wrapper around xterm which preloads tty_pona.so
+
+
+
+################################################################################
+# xterm is a good terminal, if you want to configure it well, check out:
+# - https://wiki.archlinux.org/title/Xterm
+# - man xterm
+#------------------------------------------------------------------------------
+# Edit this section to customize xterm-pona
+# with your own sitelen pona preferences
+################################################################################
+
+#-------------------------------------------------------------------------------
+# choose non-fullwidth characters font and size (used for Latin, etc.)
+# (if you don't specify, it will be taken from your Xterm configuration)
+#-------------------------------------------------------------------------------
+REGULAR_SIZE=15
+REGULAR_FONT='Liberation Mono'
+#REGULAR_FONT='Fairfax HD'
+#PONA_FONT='sitelen seli kiwen juniko'
+
+#-------------------------------------------------------------------------------
+# choose your fullwidth-characters font (used for sitelen pona UCSUR [and CJK])
+# and size (probably shouldn't be too different from REGULAR_SIZE)
+#-------------------------------------------------------------------------------
+PONA_SIZE=16
+PONA_FONT='Fairfax HD'
+#PONA_FONT='linja waso (lili)'
+#PONA_FONT='linja lipamanka'
+#PONA_FONT='sitelen seli kiwen juniko'
+
+#-------------------------------------------------------------------------------
+# JUST FOR FUN: if properly compiled, xterm knows how to make graphics
+# in the terminal using sixels (https://en.wikipedia.org/wiki/Sixel).
+# Do you want this feature?
+#-------------------------------------------------------------------------------
+ENABLE_SIXEL=true
+
+
+################################################################################
+# launcher
+################################################################################
+
+command -v 'xterm' > /dev/null || { echo 'cannot find xterm' >&2; exit 1; }
+
+[ -n "$PONA_FONT" ] && set -- -fw "xft:${PONA_FONT}:size=${PONA_SIZE}" "$@"
+[ -n "$REGULAR_FONT" ] && set -- -fn "xft:${REGULAR_FONT}:size=${REGULAR_SIZE}" "$@"
+[ "$ENABLE_SIXEL" = 'true' ] && set -- -ti vt340 "$@"
+
+DIR=$(cd "$(dirname "$0")" && cd .. && pwd)
+LD_PRELOAD=$DIR/lib/tty_pona.so
+export LD_PRELOAD
+
+xterm -u8 "$@"
