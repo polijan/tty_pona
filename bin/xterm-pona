@@ -57,6 +57,8 @@ command -v 'xterm' > /dev/null || { echo 'cannot find xterm' >&2; exit 1; }
 
 DIR=$(cd "$(dirname "$0")" && cd .. && pwd)
 LD_PRELOAD=$DIR/lib/tty_pona.so
+[ -f "$LD_PRELOAD" ] || { echo 'cannot find tty_pona.so' >&2; exit 1; }
 export LD_PRELOAD
+
 
 xterm -u8 "$@"
