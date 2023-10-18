@@ -13,7 +13,7 @@ This project provides guidance and necessary tools to setup and use ***sitelen p
 
 ### An UCSUR-compatible font
 
-As of today, the **sitelen pona** script is _not_ present in [Unicode](https://en.wikipedia.org/wiki/Unicode). However, since 2021, the [Under-ConScript Unicode Registry](https://kreativekorp.com/ucsur/) (**UCSUR**) provides [**here**](https://www.kreativekorp.com/ucsur/charts/sitelen.html) a de-facto [private](https://en.wikipedia.org/wiki/Private_Use_Areas) encoding for it in the block `U+F1900` - `U+F19FF`.
+As of today, the **sitelen pona** script is _not_ present in [Unicode](https://en.wikipedia.org/wiki/Unicode). However, since 2021, the [Under-ConScript Unicode Registry](https://kreativekorp.com/ucsur/) (**UCSUR**) provides ([**here**](https://www.kreativekorp.com/ucsur/charts/sitelen.html)) a de-facto [private](https://en.wikipedia.org/wiki/Private_Use_Areas) encoding for it in the block `U+F1900` - `U+F19FF`.
 
 Several Truetype or Opentype sitelen pona fonts are now using the UCSUR codepoints (although older fonts are not, so beware). Eventually, you'll want to try out various fonts (perhaps from [this list](https://docs.google.com/spreadsheets/d/1xwgTAxwgn4ZAc4DBnHte0cqta1aaxe112Wh1rv9w5Yk/edit#gid=1195574771) or [this repo](https://github.com/lipu-linku/nasin-sitelen)), but to get started I recommend you begin with [Fairfax HD](https://www.kreativekorp.com/software/fonts/fairfaxhd.shtml). Go ahead and **install the font(s)**:
 
@@ -23,7 +23,7 @@ Several Truetype or Opentype sitelen pona fonts are now using the UCSUR codepoin
 > Assuming your system uses fontconfig, to verify your font installation:  
 > use the provided `bin/fc-list-pona` script which lists sitelen pona UCSUR fonts recognized by your system.
 
-As an aside, with font(s) properly installed, you may also want to customize various things (such as the *Discord* messaging application) using this [guide](https://github.com/Id405/sitelen-pona-ucsur-guide/). But let's now continue the setup required for "pona"-ifying the terminal...
+As an aside, with font(s) properly installed, you may also want to customize various things (such as the *Discord* messaging application) using [this guide](https://github.com/Id405/sitelen-pona-ucsur-guide/). But let's now continue the setup required for "pona"-ifying the terminal...
 
 ### An input method
 
@@ -47,9 +47,9 @@ The following tools are **not** needed when using a sitelen pona terminal, but a
 
 (Those tools are common and may be present on your system already. Their installation depends on your actual distribution, but for example as a "sudo-trusted" user on a *Debian* or *Ubuntu*-based system, you could install everything by typing: `sudo apt install git build-essential`)
 
-### Just one more thing...
+### Just one more thing
 
-Of course, you will also need... a [terminal emulator](https://en.wikipedia.org/wiki/Terminal_emulator). I had success with several terminals, but not all will work. This is because, several "modern" terminals decide they know Unicode better than you(r system) and bypass some standard library calls to re-implement their own things instead. It is usually not possible to make sitelen pona work properly on such terminals (without altering their source code).
+Of course, you also need... a [terminal emulator](https://en.wikipedia.org/wiki/Terminal_emulator). I had success with several terminals, but not all will work. This is because, several "modern" terminals decide they know Unicode better than you(r system) and bypass some standard library calls to re-implement their own things instead. It is usually not possible to make sitelen pona work properly on such terminals (without altering their source code).
 
 As you start your own testing, **it is recommended that you install [xterm](https://en.wikipedia.org/wiki/Xterm)**, a popular and standard-compliant well-working full-featured terminal (sixels, etc). `xterm` is convenient as it is easy to specify a font to use just for wide characters. This is practical for using an UCSUR font specifically for sitelen pona while using your favorite usual font for ASCII and Latin.
 
@@ -107,7 +107,8 @@ If you get the same results, you are ready to try injecting `tty_pona.so` to the
 
 > The script **`xterm-pona`** (in the `bin/` folder) is a wrapper around xterm which "preloads" `tty_pona.so`  
 > to the xterm's program and making it fully functional with sitelen pona.  
-> Edit and customize the start of the script, according to what fonts you have, and then launch it:
+> Edit and customize the start of the script, according to what fonts you have.  
+> Then launch `bin/xterm-pona`:
 
 ```sh
 # 3 glyhps "ale li pona" in sitelen pona (again you could just the use input method instead)
@@ -126,18 +127,28 @@ $ bin/width -c "$TOKI"
 6
 ```
 
-Hopefully, you have success here!
+Hopefully, everything goes successfully!
+If so, **congratulations**, sitelen pona should work in the terminal.
 
-If so, then you can play with more fonts, more terminals (and xterm itself is good once [configured](https://wiki.archlinux.org/title/Xterm)). In the repo, you can go "play" in the `ijo/` folder which contains stuff with sitelen pona.
+A few notes:
+* In the repo, the `ijo/` folder contains stuff with sitelen pona. You can play with it!
+* You can play with using different fonts, trying out various terminals (and `xterm` itself really is good one once properly [configured](https://wiki.archlinux.org/title/Xterm)).
+* If you want to install the `lib/` and `bin/` folder globally on your system, you can do: `sudo INSTALL_DIR=/usr/local make install`
 
 ## Things to consider / Troubleshooting
 
-**TODO**
+* If things go wrong: always wonder if `LD_PRELOAD` is properly setup and exported/inherited
+* **Remote applications!** If you have a remote session (say via `ssh`), you must have a build of `tty_pona.so` on the server too and manually set and export the `LD_PRELOAD` environment variable there too.
+* **Static binaries!** the `LD_PRELOAD` trick cannot work on statically built executables. Unfortunately, static build is the by-default option in [Go](https://go.dev/). Building those apps dynamically is necessary.
+* **Server/Daemon modes!** Some terminals start a server or daemon (sometimes this is configurable, but sometimes not) and each terminal window simply spawns and inherits its configuration from that process. This mode of operation msy allow each instance to start faster or use less memory. Other applications, especially terminal multiplexers (such as `tmux`) follow a similar server model too. In a such case, for things to be displayed flawlessly, make sure `LD_PRELOAD` is applied to the daemon/server itself.
+* **Know-Better terminals** (or applications)**!** Some terminals just flat-out refuse to use `wcwidth` and will implement their own thing (perhaps with the idea that they can then ship a version which conforms better to the lastest Unicode standard?). If their config options or flags let you manually define which glyphs are wide (for example `mlterm --fullwidth=...` does this) then it can work, otherwise `tty_pona.so` will not work with those terminals.
+* Notes about other **various OSes**: `LD_PRELOAD` works on Linux. It exists also on some *BSDs. Other UNIXes might name things differently, for example under MacOS, it's called [DYLD_INSERT_LIBRARIES](https://stackoverflow.com/questions/34114587/dyld-library-path-dyld-insert-libraries-not-working) (and may require some tweaking).
 
 
 ## Conclusion
 
-I hope you enjoy using sitelen pona in terminals.
+I hope you will get to enjoy using sitelen pona in terminals.  
+If you do something interesting in that space, please share your creations.
 
 Hopefully, sitelen pona would become a part of Unicode in the future, as this would avoid having to jump through hoops for what should be a simple task. The Toki Pona language exists, has been growing, is actively used, and it is not going away any time soon. There are constantly texts being produced in it. It deserves to be encoded. Whether that will happen is not certain...
 
