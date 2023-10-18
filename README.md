@@ -13,12 +13,12 @@ This project provides guidance and necessary tools to setup and use ***sitelen p
 
 ### An UCSUR-compatible font
 
-As of today, the **sitelen pona** script is _not_ present in [Unicode](https://en.wikipedia.org/wiki/Unicode). However, since 2021, the [Under-ConScript Unicode Registry](https://kreativekorp.com/ucsur/) (**UCSUR**) provides a [Private Use Areas](https://en.wikipedia.org/wiki/Private_Use_Areas) de-facto encoding for it in the block `U+F1900` - `U+F19FF`. We're going to use that encoding, so you may want to browse through [**the specification**](https://www.kreativekorp.com/ucsur/charts/sitelen.html). 
+As of today, the **sitelen pona** script is _not_ present in [Unicode](https://en.wikipedia.org/wiki/Unicode). However, since 2021, the [Under-ConScript Unicode Registry](https://kreativekorp.com/ucsur/) (**UCSUR**) provides [**here**](https://www.kreativekorp.com/ucsur/charts/sitelen.html) a de-facto [private](https://en.wikipedia.org/wiki/Private_Use_Areas) encoding for it in the block `U+F1900` - `U+F19FF`.
 
-Although several Truetype or Opentype sitelen pona fonts are now using the UCSUR codepoints, older fonts are not (so beware). Eventually, you'll want to try out various fonts (perhaps from [this list](https://docs.google.com/spreadsheets/d/1xwgTAxwgn4ZAc4DBnHte0cqta1aaxe112Wh1rv9w5Yk/edit#gid=1195574771) or [this repo](https://github.com/lipu-linku/nasin-sitelen)), but to get started I recommend you begin with [Fairfax HD](https://www.kreativekorp.com/software/fonts/fairfaxhd.shtml). Go ahead and **install the font(s)**
+Several Truetype or Opentype sitelen pona fonts are now using the UCSUR codepoints (although older fonts are not, so beware). Eventually, you'll want to try out various fonts (perhaps from [this list](https://docs.google.com/spreadsheets/d/1xwgTAxwgn4ZAc4DBnHte0cqta1aaxe112Wh1rv9w5Yk/edit#gid=1195574771) or [this repo](https://github.com/lipu-linku/nasin-sitelen)), but to get started I recommend you begin with [Fairfax HD](https://www.kreativekorp.com/software/fonts/fairfaxhd.shtml). Go ahead and **install the font(s)**:
 
 * either system-wide, in `/usr/local/share/fonts`
-* or in your home directory, in `~/.local/share/fonts`[*](https://wiki.archlinux.org/title/XDG_Base_Directory) (or `~/.fonts` might work too).
+* or in your home directory, in `~/.local/share/fonts`[⁽⁺⁾](https://wiki.archlinux.org/title/XDG_Base_Directory) (or `~/.fonts` might work too).
 
 > Assuming your system uses fontconfig, to verify your font installation:  
 > use the provided `bin/fc-list-pona` script which lists sitelen pona UCSUR fonts recognized by your system.
@@ -27,7 +27,7 @@ As an aside, with font(s) properly installed, you may also want to customize var
 
 ### An input method
 
-You might postpone this step, but to work productively at the terminal, you will require a way to easily input the sitelen pona UCSUR glyphs. Several fonts let you input latin characters and show sitelen pona as ligatures but that may not work well on the terminal (often quite the contrary). We want true glyphs entered via an input method. For Unix-like systems, there are currently three main options to choose from:
+You might postpone this step, but to work productively at the terminal, you will require a way to easily input the sitelen pona glyphs. Several fonts let you input latin characters and show sitelen pona as ligatures but that may not work well on the terminal (often quite the contrary). We want the true codepoints entered via an input method. For Unix-like systems, there are currently three main options to choose from:
 
  - a full [sitelen pona keyboard layout](https://www.kreativekorp.com/software/keyboards/sitelenpona/) which can directly enter all the sitelen pona UCSUR glyphs.
  - an `ibus` and `ibus-table` based method where you enter the word in Latin and it completes into the sitelen pona glyph. This is described [here](https://github.com/Id405/sitelen-pona-ucsur-guide/#linux) and it works!
@@ -35,7 +35,7 @@ You might postpone this step, but to work productively at the terminal, you will
 
 (Some of those methods might require a few adjustements to the configuration they provide if your keyboard layout is quite different from US QWERTY). 
 
-With a font and an input method installed, you should be able to get a semi-operational terminal with sitelen pona. The rest of the guide will concentrate on making sitelen pona recognized as [**fullwidth ideograms**](https://en.wikipedia.org/wiki/Halfwidth_and_fullwidth_forms).
+With a font and an input method installed, you may be able to get a semi-operational terminal with sitelen pona. The rest of the guide will concentrate on making sitelen pona recognized as [**fullwidth ideograms**](https://en.wikipedia.org/wiki/Halfwidth_and_fullwidth_forms).
 
 ### Dev tools
 
@@ -49,9 +49,9 @@ The following tools are **not** needed when using a sitelen pona terminal, but a
 
 ### Just one more thing...
 
-Of course, you will also need... a  [terminal emulator](https://en.wikipedia.org/wiki/Terminal_emulator). I had success with several terminals, but not all will work. This is because, several "modern" terminals decide they know Unicode better than you(r system) and bypass some standard library calls to re-implement their own things instead. It is usually not possible to make sitelen pona work properly on such terminals (without altering their source code).
+Of course, you will also need... a [terminal emulator](https://en.wikipedia.org/wiki/Terminal_emulator). I had success with several terminals, but not all will work. This is because, several "modern" terminals decide they know Unicode better than you(r system) and bypass some standard library calls to re-implement their own things instead. It is usually not possible to make sitelen pona work properly on such terminals (without altering their source code).
 
-As you start your own testing, **it is recommended that you install `xterm`**, a popular and standard-compliant well-working full-featured terminal (sixels, etc). xterm is convenient as it is easy to specify a font to use just for wide characters. This is practical for using an UCSUR font specifically for sitelen pona while using your favorite usual font for ASCII and Latin.
+As you start your own testing, **it is recommended that you install [xterm](https://en.wikipedia.org/wiki/Xterm)**, a popular and standard-compliant well-working full-featured terminal (sixels, etc). `xterm` is convenient as it is easy to specify a font to use just for wide characters. This is practical for using an UCSUR font specifically for sitelen pona while using your favorite usual font for ASCII and Latin.
 
 
 ## Installing and Using the **tty_pona** tools
@@ -81,20 +81,54 @@ Let's use...
 
 ### Using  `tty_pona.so`
 
-In Linux, the [dynamic loader](https://en.wikipedia.org/wiki/Dynamic_loading) will first load shared libraries that are specified in the `LD_PRELOAD` environment variable before any other library. Thus by setting `LD_PRELOAD` to (the full path of) `tty_pona.so`, we can easily inject our custom `wcwidth` function in place of the standard C library to any dynamically linked executable. Let's try injecting `tty_pona.so` to the `width` program:
+In Linux, the [dynamic loader](https://en.wikipedia.org/wiki/Dynamic_loading) first loads shared libraries that are specified in the `LD_PRELOAD` environment variable before any other library. Thus by setting `LD_PRELOAD` to (the full path of) `tty_pona.so`, we can easily inject our custom `wcwidth` function in place of the standard C library to any dynamically linked executable.
 
-**TODO**
+Let's try injecting `tty_pona.so` to the `width` program:
 
-If you get the same results, you are ready to try on a terminal:
+```sh
+# the 3 glyphs "ale li pona" in sitelen pona
+# (using raw UTF-8 bytes here, but you could use the input method instead)
+TOKI=$(printf '\363\261\244\204\363\261\244\247\363\261\245\224')
+
+# count the width (using C's wcswidth method):
+$ bin/width -c "$TOKI"
+3
+
+# same but here we are "injecting" toki_pona.so:
+$ LD_PRELOAD=lib/tty_pona.so bin/width -c "$TOKI"
+6
+
+# width -t knows how to measure how many many columns the terminal *actually* uses:
+$ bin/width -t "$TOKI"
+3
+```
+
+If you get the same results, you are ready to try injecting `tty_pona.so` to the terminal itself:
 
 > The script **`xterm-pona`** (in the `bin/` folder) is a wrapper around xterm which "preloads" `tty_pona.so`  
-> into an xterm's environment making it fully functional with sitelen pona.  
-> Edit and customize the start of the script, according to what fonts you have and try it.
-> Launch!
-> In the shell, you can go "play" in the `ijo/` folder which contains stuff with sitelen pona.
+> to the xterm's program and making it fully functional with sitelen pona.  
+> Edit and customize the start of the script, according to what fonts you have, and then launch it:
+
+```sh
+# 3 glyhps "ale li pona" in sitelen pona (again you could just the use input method instead)
+TOKI=$(printf '\363\261\244\204\363\261\244\247\363\261\245\224')
+
+# check that the shell launched by the terminal has properly inherited the LD_PRELOAD from the terminal:
+$ echo "$LD_PRELOAD"
+<something>/lib/tty_pona.so
+
+# width -t to see how many columns the terminal *actually* uses:
+$ bin/width -t "$TOKI"
+6
+
+# width -c to see the width the C library would give to programs:
+$ bin/width -c "$TOKI"
+6
+```
 
 Hopefully, you have success here!
-If so, then you can play with more fonts, more terminals, etc.
+
+If so, then you can play with more fonts, more terminals (and xterm itself is good once [configured](https://wiki.archlinux.org/title/Xterm)). In the repo, you can go "play" in the `ijo/` folder which contains stuff with sitelen pona.
 
 ## Things to consider / Troubleshooting
 
