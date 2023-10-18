@@ -108,7 +108,7 @@ If you get the same results, you are ready to try injecting `tty_pona.so` to the
 > The script **`xterm-pona`** (in the `bin/` folder) is a wrapper around xterm which "preloads" `tty_pona.so`  
 > to the xterm's program and making it fully functional with sitelen pona.  
 > Edit and customize the start of the script, according to what fonts you have.  
-> Then launch `bin/xterm-pona`:
+> Then launch `bin/xterm-pona &`:
 
 ```sh
 # 3 glyhps "ale li pona" in sitelen pona (again you could just the use input method instead)
@@ -125,13 +125,16 @@ $ bin/width -t "$TOKI"
 # width -c to see the width the C library would give to programs:
 $ bin/width -c "$TOKI"
 6
+
+# if the above went well, let's try:
+$ cat etc/UCSUR.txt
 ```
 
 Hopefully, everything goes successfully!
 If so, **congratulations**, sitelen pona should work in the terminal.
 
 A few notes:
-* In the repo, the `ijo/` folder contains stuff with sitelen pona. You can play with it!
+* In the repo, the `etc/` folder contains stuff with sitelen pona. You can play with it!
 * You can play with using different fonts, trying out various terminals (and `xterm` itself really is good one once properly [configured](https://wiki.archlinux.org/title/Xterm)).
 * If you want to install the `lib/` and `bin/` folder globally on your system, you can do: `sudo INSTALL_DIR=/usr/local make install`
 
