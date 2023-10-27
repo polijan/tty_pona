@@ -29,7 +29,7 @@ As an aside, with font(s) properly installed, you may also want to customize var
 
 You might postpone this step, but to work productively at the terminal, you will require a way to easily input the sitelen pona glyphs. Several fonts let you input latin characters and show sitelen pona as ligatures but that may not work well on the terminal (often quite the contrary). We want the true codepoints entered via an input method. For Unix-like systems, there are currently three main options to choose from:
 
- - a full [sitelen pona keyboard layout](https://www.kreativekorp.com/software/keyboards/sitelenpona/) which can directly enter all the sitelen pona UCSUR glyphs.
+ - a full [sitelen pona keyboard layout](https://www.kreativekorp.com/software/keyboards/sitelenpona/) which can directly enter all the sitelen pona UCSUR glyphs. You can even get an actual [physical keyboard](https://github.com/RebeccaRGB/sitelen-pona-keycaps) with this layout.
  - an `ibus` and `ibus-table` based method where you enter the word in Latin and it completes into the sitelen pona glyph. This is described [here](https://github.com/Id405/sitelen-pona-ucsur-guide/#linux) and it works!
  - a method called "*Wakalito*" ([instruction and definitions direct download](https://cdn.discordapp.com/attachments/316066233755631616/1061846136907890778/nasin_sitelen_Wakalito_7.3.2.zip)), based on the free software `espanso`, where the left half of the keyboard represents shapes which you input to create sitelen pona glyphs.
 
