@@ -7,7 +7,7 @@
 
 This project provides guidance and necessary tools to setup and use ***sitelen pona*** (script for the constructed language [**toki pona**](https://en.wikipedia.org/wiki/Toki_Pona) [[tok](https://iso639-3.sil.org/code/tok)]) as proper **fullwidth** ideograms **in terminal emulators** under Unix-like systems (mostly *Linux*).
 
-![a text editor running in a terminal emulator with sitelen pona properly setup as fullwidth ideograms](https://cdn.discordapp.com/attachments/994960433951801374/1162480696443535505/image.png)
+![a text editor running in a terminal emulator with sitelen pona properly setup as fullwidth ideograms](https://raw.githubusercontent.com/polijan/tty_pona/main/etc/sitelen.png)
 
 ## Prerequisites
 
